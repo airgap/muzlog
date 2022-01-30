@@ -46,8 +46,8 @@ export class Muzlog {
             );
             req.on('end', async () => {
                 try { //                                                      LIGHTS
-                    const params = JSON.parse(data.join('')); //              CAMERA
-                    const result = await (<{ [key: string]: Action }>actions)[ACTION!!!](params, {r});
+                    req['params'] = JSON.parse(data.join('')); //              CAMERA
+                    const result = await (<{ [key: string]: Action }>actions)[ACTION!!!](req, {r});
                     console.log('result', result);
                     res.end(JSON.stringify(result));
                 } catch (e) {
