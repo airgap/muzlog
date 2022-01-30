@@ -50,7 +50,7 @@ export class Muzlog {
             req.on('end', async () => {
                 try {
                     const params = JSON.parse(data.join(''));
-                    const {action, ips} = (<{ [key: string]: Route }><unknown>routes)[path!!!];
+                    const {action, ips} = (<{ [key: string]: Route }>routes)[path!!!];
                     const ip = req.headers['True-Client-IP'];
                     console.log('True-Client-IP', ip)
                     if (ips && !checkIp(ip as string, ips)) {
