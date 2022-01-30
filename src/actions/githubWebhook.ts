@@ -1,5 +1,6 @@
 import * as checkIp from 'ip-range-check';
 import {Action} from "../Action";
+import {insertEvent} from "../insertEvent";
 
 const githubWebhookIps = [
     "192.30.252.0/22",
@@ -13,9 +14,10 @@ export const githubWebhook: Action = async (params, {r, req}) => {
     if(!checkIp(req.socket.remoteAddress ?? '', githubWebhookIps))
         return r.status(403).send("Unless you're a GitHub webhook, you can kindly heck off");
     console.log("githubWebhook", params);
-    await r.table('Events').insert({
-        type: 'vcs/github',
-        body: params
-    });
+    await insertEvent(
+        'vcs/github',
+        params,
+        r
+    );
     return 'aaaaa';
 }
