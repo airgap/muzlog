@@ -1,4 +1,3 @@
-// @ts-ignore TS6133
 import * as dash from 'rethinkdbdash';
 import {readFile} from "fs/promises";
 import {join} from 'path';
