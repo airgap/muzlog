@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/airgap/muzlog#readme",
   "dependencies": {
-    "@cloudflare/wrangler": "^1.19.7",
     "bcryptjs": "^2.4.3",
     "i": "^0.3.7",
     "npm": "^8.4.0",
