@@ -3,7 +3,7 @@ import {readFile} from "fs/promises";
 import {join} from 'path';
 import {Server} from 'https';
 import * as actions from './actions/actions';
-import { RequestListener } from 'http';
+import {RequestListener} from 'http';
 import {Action} from "./Action";
 
 const r: any = dash({
@@ -33,20 +33,20 @@ export class Muzlog {
 
     listener: RequestListener = (req, res) => {
         const ACTION = req?.url?.substring(1);
-        if(!ACTION) {
+        if (!ACTION) {
             res.writeHead(404);
             res.end('Giggity');
             return;
         }
-        if(ACTION in actions) {
+        if (ACTION in actions) {
             let data: string[] = [];
             req.on('data', (chunk) =>
                 data.push(chunk)
             );
             req.on('end', async () => {
-                try {                                                    // LIGHTS
-                    const params = JSON.parse(data.join(''));            // CAMERA
-                    const result = await (<{[key: string]: Action}>actions)[ACTION!!!](params, {r});
+                try { //                                                      LIGHTS
+                    const params = JSON.parse(data.join('')); //              CAMERA
+                    const result = await (<{ [key: string]: Action }>actions)[ACTION!!!](params, {r});
                     console.log('result', result);
                     res.end(JSON.stringify(result));
                 } catch (e) {
