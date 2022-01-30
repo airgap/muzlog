@@ -1,13 +1,12 @@
 {
   "name": "muzlog",
-  "type": "module",
   "version": "0.0.0",
   "description": "Collect and publish Muzzin-related activity",
   "main": "dist/Muzlog.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config src/webpack.dev.js",
-    "build-prod": "webpack --config src/webpack.prod.js",
+    "build": "webpack --config src/webpack.dev.mjs",
+    "build-prod": "webpack --config src/webpack.prod.mjs",
     "start": "node dist/main.js",
     "in-bg": "pm2 start dist/main.js --name muzlog"
   },
