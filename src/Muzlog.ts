@@ -2,9 +2,10 @@ import * as dash from 'rethinkdbdash';
 import {readFile} from "fs/promises";
 import {join} from 'path';
 import {Server} from 'https';
-import * as actions from './actions/actions';
+import * as Actions from './actions/Actions';
 import {RequestListener} from 'http';
 import {Action} from "./Action";
+import * as checkIp from 'ip-range-check';
 
 const r: any = dash({
     servers: [{
@@ -39,15 +40,21 @@ export class Muzlog {
             res.end('Giggity');
             return;
         }
-        if (ACTION in actions) {
+        if (ACTION in Actions) {
             let data: string[] = [];
             req.on('data', (chunk) =>
                 data.push(chunk)
             );
             req.on('end', async () => {
-                try { //                                                      LIGHTS
-                    const params = JSON.parse(data.join('')); //              CAMERA
-                    const result = await (<{ [key: string]: Action }>actions)[ACTION!!!](params, {r, req});
+                try { //                                                    LIGHTS
+                    const params = JSON.parse(data.join('')); //            CAMERA
+                    const {act, ips} = (<{ [key: string]: Action }>Actions)[ACTION!!!];
+                    if (ips && !checkIp(ips, req.connection.remoteAddress)) {
+                        res.writeHead(403);
+                        res.end('DENIED!!!');
+                        return;
+                    }
+                    const result = await act(params, {r, req});
                     console.log('result', result);
                     res.end(JSON.stringify(result));
                 } catch (e) {
