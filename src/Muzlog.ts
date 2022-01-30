@@ -25,8 +25,8 @@ export class Muzlog {
         this.api = new Server(await this.certs(
             '/etc/letsencrypt/live/log.muzz.in-0001',
             {
-                cert: 'cert',
-                key: 'fullchain',
+                cert: 'fullchain',
+                key: 'privkey',
                 ca: 'chain'
             }
         ), this.listener).listen(443);
