@@ -23,7 +23,7 @@ export class Muzlog {
 
     startApi = async () => {
         this.api = new Server(await this.certs(
-            '/etc/letsencrypt/live/log.muzz.in',
+            '/etc/letsencrypt/live/log.muzz.in-0001',
             {
                 cert: 'cert',
                 key: 'privkey'
@@ -44,8 +44,8 @@ export class Muzlog {
                 data.push(chunk)
             );
             req.on('end', async () => {
-                try {
-                    const params = JSON.parse(data.join(''));
+                try {                                                    // LIGHTS
+                    const params = JSON.parse(data.join(''));            // CAMERA
                     const result = await (<{[key: string]: Action}>actions)[ACTION!!!](params, {r});
                     console.log('result', result);
                     res.end(JSON.stringify(result));
