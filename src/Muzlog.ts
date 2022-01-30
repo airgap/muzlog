@@ -49,7 +49,9 @@ export class Muzlog {
                 try { //                                                    LIGHTS
                     const params = JSON.parse(data.join('')); //            CAMERA
                     const {action, ips} = (<{ [key: string]: Route }><unknown>routes)[path!!!];
-                    if (ips && !checkIp(req.headers['True-Client-IP'] as string, ips)) {
+                    const ip = req.headers['True-Client-IP'];
+                    console.log('True-Client-IP', ip)
+                    if (ips && !checkIp(ip as string, ips)) {
                         res.writeHead(403);
                         res.end('DENIED!!!');
                         return;
