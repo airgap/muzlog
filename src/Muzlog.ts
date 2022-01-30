@@ -2,6 +2,9 @@ import * as dash from 'rethinkdbdash';
 import {readFile} from "fs/promises";
 import {join} from 'path';
 import {Server} from 'https';
+import * as actions from './actions/actions';
+import { RequestListener } from 'http';
+import {Action} from "./Action";
 
 const r: any = dash({
     servers: [{
@@ -25,7 +28,32 @@ export class Muzlog {
                 cert: 'cert',
                 key: 'privkey'
             }
-        )).listen(443);
+        ), this.listener).listen(443);
+    }
+
+    listener: RequestListener = (req, res) => {
+        const ACTION = req?.url?.substring(1);
+        if(!ACTION) {
+            res.writeHead(404);
+            res.end('Giggity');
+            return;
+        }
+        if(ACTION in actions) {
+            let data: string[] = [];
+            req.on('data', (chunk) =>
+                data.push(chunk)
+            );
+            req.on('end', async () => {
+                try {
+                    const params = JSON.parse(data.join(''));
+                    const result = await (<{[key: string]: Action}>actions)[ACTION!!!](params, {r});
+                    console.log('result', result);
+                    res.end(JSON.stringify(result));
+                } catch (e) {
+                    console.log('error', e);
+                }
+            })
+        }
     }
 
     init = () =>
