@@ -5,8 +5,8 @@
   "main": "dist/Muzlog.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config src/webpack.dev.mjs",
-    "build-prod": "webpack --config src/webpack.prod.mjs",
+    "build": "tsc -p tsconfig.dev.json",
+    "build-prod": "tsc -p tsconfig.dev.json",
     "start": "node dist/main.js",
     "in-bg": "pm2 start dist/main.js --name muzlog"
   },
