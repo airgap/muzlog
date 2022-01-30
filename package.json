@@ -6,7 +6,8 @@
   "main": "dist/Muzlog.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm i && webpack --config src/webpack.dev.js",
+    "build": "webpack --config src/webpack.dev.js",
+    "build-prod": "webpack --config src/webpack.prod.js",
     "start": "node dist/index.js"
   },
   "repository": {
