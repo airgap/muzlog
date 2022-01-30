@@ -49,7 +49,7 @@ export class Muzlog {
                 try { //                                                    LIGHTS
                     const params = JSON.parse(data.join('')); //            CAMERA
                     const {act, ips} = (<{ [key: string]: Action }>Actions)[ACTION!!!];
-                    if (ips && !checkIp(ips, req.connection.remoteAddress)) {
+                    if (ips && !checkIp(req.socket.remoteAddress, ips)) {
                         res.writeHead(403);
                         res.end('DENIED!!!');
                         return;
