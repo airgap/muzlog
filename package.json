@@ -8,8 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config src/webpack.dev.js",
     "build-prod": "webpack --config src/webpack.prod.js",
-    "start": "node dist/index.js",
-    "in-bg": "pm2 start dist/index.js --name muzlog"
+    "start": "node dist/main.js",
+    "in-bg": "pm2 start dist/main.js --name muzlog"
   },
   "repository": {
     "type": "git",
