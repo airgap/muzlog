@@ -34,7 +34,9 @@ export class Muzlog {
     }
 
     listener: RequestListener = (req, res) => {
-        const path = req?.url?.substring(1);
+        let path = req?.url?.substring(1);
+        if(path && path.length)
+            path = path[0].toUpperCase() + path.substring(1);
         if (!path) {
             res.writeHead(404);
             res.end('Giggity');
@@ -46,8 +48,8 @@ export class Muzlog {
                 data.push(chunk)
             );
             req.on('end', async () => {
-                try { //                                                    LIGHTS
-                    const params = JSON.parse(data.join('')); //            CAMERA
+                try {
+                    const params = JSON.parse(data.join(''));
                     const {action, ips} = (<{ [key: string]: Route }><unknown>routes)[path!!!];
                     const ip = req.headers['True-Client-IP'];
                     console.log('True-Client-IP', ip)
