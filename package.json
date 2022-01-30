@@ -23,8 +23,6 @@
   "homepage": "https://github.com/airgap/muzlog#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "i": "^0.3.7",
-    "npm": "^8.4.0",
     "rethinkdbdash": "^2.3.31",
     "pm2": "^2.3.0"
   },
