@@ -26,7 +26,8 @@ export class Muzlog {
             '/etc/letsencrypt/live/log.muzz.in-0001',
             {
                 cert: 'cert',
-                key: 'privkey'
+                key: 'fullchain',
+                ca: 'chain'
             }
         ), this.listener).listen(443);
     }
