@@ -2,7 +2,7 @@ import * as dash from 'rethinkdbdash';
 import {readFile} from "fs/promises";
 import {join} from 'path';
 import {Server} from 'https';
-import * as routes from './routes/routes';
+import * as routes from './routes/routes.js';
 import {RequestListener} from 'http';
 import {Route} from "./Route";
 import * as checkIp from 'ip-range-check';
