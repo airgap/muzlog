@@ -9,9 +9,13 @@ const githubWebhookIps = [
     "2a0a:a440::/29",
     "2606:50c0::/32"
 ];
-export const githubWebhook: Action = (req, {r}) => {
-    if(!checkIp(req.ip, githubWebhookIps))
+export const githubWebhook: Action = async (params, {r, req}) => {
+    if(!checkIp(req.socket.remoteAddress ?? '', githubWebhookIps))
         return r.status(403).send("Unless you're a GitHub webhook, you can kindly heck off");
     console.log("githubWebhook", params);
+    await r.table('Events').insert({
+        type: 'vcs/github',
+        body: params
+    });
     return 'aaaaa';
 }
