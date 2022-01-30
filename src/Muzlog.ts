@@ -2,9 +2,9 @@ import * as dash from 'rethinkdbdash';
 import {readFile} from "fs/promises";
 import {join} from 'path';
 import {Server} from 'https';
-import * as Actions from './actions/Actions';
+import * as routes from './routes/routes';
 import {RequestListener} from 'http';
-import {Action} from "./Action";
+import {Route} from "./Route";
 import * as checkIp from 'ip-range-check';
 
 const r: any = dash({
@@ -34,13 +34,13 @@ export class Muzlog {
     }
 
     listener: RequestListener = (req, res) => {
-        const ACTION = req?.url?.substring(1);
-        if (!ACTION) {
+        const path = req?.url?.substring(1);
+        if (!path) {
             res.writeHead(404);
             res.end('Giggity');
             return;
         }
-        if (ACTION in Actions) {
+        if (path in routes) {
             let data: string[] = [];
             req.on('data', (chunk) =>
                 data.push(chunk)
@@ -48,13 +48,13 @@ export class Muzlog {
             req.on('end', async () => {
                 try { //                                                    LIGHTS
                     const params = JSON.parse(data.join('')); //            CAMERA
-                    const {act, ips} = (<{ [key: string]: Action }>Actions)[ACTION!!!];
-                    if (ips && !checkIp(req.socket.remoteAddress, ips)) {
+                    const {action, ips} = (<{ [key: string]: Route }><unknown>routes)[path!!!];
+                    if (ips && !checkIp(req.socket.remoteAddress ?? '', ips)) {
                         res.writeHead(403);
                         res.end('DENIED!!!');
                         return;
                     }
-                    const result = await act(params, {r, req});
+                    const result = await action(params, {r, req});
                     console.log('result', result);
                     res.end(JSON.stringify(result));
                 } catch (e) {
