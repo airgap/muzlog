@@ -1,6 +1,6 @@
 export const insertEvent = (subject: string, body: any, r: any) =>
-    r.insert({
+    r.table('Events').insert({
         subject,
         body,
         ingestedAt: new Date()
-    })
+    });
