@@ -12,7 +12,7 @@ export const GithubWebhook: Route = {
     action: async (params, {r}) => {
         console.log("githubWebhook", params);
         await insertEvent(
-            'vcs/github',
+            'vcs/github/webhook',
             params,
             r
         );
