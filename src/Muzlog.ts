@@ -51,7 +51,7 @@ export class Muzlog {
                 try {
                     const params = JSON.parse(data.join(''));
                     const {action, ips} = (<{ [key: string]: Route }>routes)[path!!!];
-                    const ip = req.headers['True-Client-IP'];
+                    const ip = req.headers['True-Client-IP'] ?? req.socket.remoteAddress;
                     console.log('True-Client-IP', ip)
                     if (ips && !checkIp(ip as string, ips)) {
                         res.writeHead(403);
