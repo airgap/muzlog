@@ -1,6 +1,6 @@
 import {Action, Route} from "../Route";
 export const ListPublicEvents: Route = {
-    ips: null,
+    ips: ['*'],
     action: async (params, {r}) => {
         console.log("listing public events", params);
         return await r.table('Events')

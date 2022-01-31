@@ -51,7 +51,7 @@ export class Muzlog {
                 const ip = req.headers['True-Client-IP'] ?? req.socket.remoteAddress;
                 const {action, ips} = (<{ [key: string]: Route }>routes)[path!!!];
                 console.log('True-Client-IP', ip)
-                if (ips && !checkIp(ip as string, ips)) {
+                if (ips[0] !== '*' && !checkIp(ip as string, ips)) {
                     res.writeHead(403);
                     res.end('DENIED!!!');
                     return;
