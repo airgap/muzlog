@@ -35,7 +35,7 @@ export class Muzlog {
 
     listener: RequestListener = (req, res) => {
         let path = req?.url?.substring(1);
-        if(path && path.length)
+        if (path && path.length)
             path = path[0].toUpperCase() + path.substring(1);
         if (!path) {
             res.writeHead(404);
@@ -48,22 +48,24 @@ export class Muzlog {
                 data.push(chunk)
             );
             req.on('end', async () => {
-                try {
-                    const params = JSON.parse(data.join(''));
-                    const {action, ips} = (<{ [key: string]: Route }>routes)[path!!!];
-                    const ip = req.headers['True-Client-IP'] ?? req.socket.remoteAddress;
-                    console.log('True-Client-IP', ip)
-                    if (ips && !checkIp(ip as string, ips)) {
-                        res.writeHead(403);
-                        res.end('DENIED!!!');
-                        return;
-                    }
-                    const result = await action(params, {r, req});
-                    console.log('result', result);
-                    res.end(JSON.stringify(result));
-                } catch (e) {
-                    console.log('error', e);
+                const ip = req.headers['True-Client-IP'] ?? req.socket.remoteAddress;
+                const {action, ips} = (<{ [key: string]: Route }>routes)[path!!!];
+                console.log('True-Client-IP', ip)
+                if (ips && !checkIp(ip as string, ips)) {
+                    res.writeHead(403);
+                    res.end('DENIED!!!');
+                    return;
                 }
+                let params = {};
+                if (data.length)
+                    try {
+                        params = JSON.parse(data.join(''));
+                    } catch (e) {
+                        console.log('error', e);
+                    }
+                const result = await action(params, {r, req});
+                console.log('result', result);
+                res.end(JSON.stringify(result));
             })
         }
     }
