@@ -5,7 +5,7 @@ import {Server} from 'https';
 import * as routes from './routes/routes';
 import {RequestListener} from 'http';
 import {Route} from "./Route";
-import * as checkIp from 'ip-range-check';
+const checkIp = require('ip-range-check');
 import fetch from 'node-fetch';
 
 const r: any = dash({
