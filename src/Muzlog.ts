@@ -6,7 +6,7 @@ import * as routes from './routes/routes';
 import {RequestListener} from 'http';
 import {Route} from "./Route";
 import * as checkIp from 'ip-range-check';
-import * as fetch from 'node-fetch';
+import fetch from 'node-fetch';
 
 const r: any = dash({
     servers: [{
@@ -20,7 +20,7 @@ export class Muzlog {
     _certs?: { [key: string]: string };
     api?: Server;
 
-    beatInterval: NodeJS.Timer;
+    beatInterval?: NodeJS.Timer;
 
     constructor() {
     }
@@ -37,9 +37,10 @@ export class Muzlog {
         this.startHeatbeat();
     }
 
-    startHeatbeat = async () => {
+    startHeatbeat = () => {
+        if(this.beatInterval)
+            clearInterval(this.beatInterval);
         this.beatInterval = setInterval(this.heartbeat, 1);
-        clearInterval(this.beatInterval);
     }
     heartbeat = () =>
         fetch('https://log.muzz.in/beatOwnHeart', {
