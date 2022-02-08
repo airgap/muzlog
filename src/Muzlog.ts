@@ -42,15 +42,15 @@ export class Muzlog {
     startHeatbeat = () => {
         if(this.beatInterval)
             clearInterval(this.beatInterval);
-        this.beatInterval = setInterval(this.heartbeat, 1);
+        this.beatInterval = setInterval(this.heartbeat, 1000);
     }
     heartbeat = () =>
-        fetch('https://log.muzz.in/beatOwnHeart', {
+        fetch('https://log.muzz.in/BeatOwnHeart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: `{"Doggo": "Woof"}`
+            body: '{"Doggo": "Woof"}'
         })
 
     listener: RequestListener = (req, res) => {
