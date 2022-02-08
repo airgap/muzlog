@@ -15,6 +15,7 @@ export abstract class Route {
     matches = (ip: string): boolean => {
         if(this.ips[0] === '*')
             return true;
+        console.log('parse', parse);
         const addr = parse(ip);
         // @ts-ignore
         return this.ranges.some(range => addr.match(range));
