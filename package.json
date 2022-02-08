@@ -1,5 +1,6 @@
 {
   "name": "muzlog",
+  "type": "module",
   "version": "0.0.0",
   "description": "Collect and publish Muzzin-related activity",
   "main": "dist/Muzlog.js",
