@@ -1,6 +1,6 @@
 import {IncomingMessage} from "http";
 import * as jank from 'ipaddr.js';
-const {parseCIDR} = jank;
+const {parseCIDR, parse} = jank;
 
 export type Action = (params: any, {r}: { r: any, req: IncomingMessage }) => Promise<any>;
 export type CIDR = [any, number];
@@ -15,7 +15,7 @@ export abstract class Route {
     matches = (ip: string): boolean => {
         if(this.ips[0] === '*')
             return true;
-        const addr = parseCIDR(ip);
+        const addr = parse(ip);
         // @ts-ignore
         return this.ranges.some(range => addr.match(range));
     }
