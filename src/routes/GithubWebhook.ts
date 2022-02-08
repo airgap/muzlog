@@ -1,5 +1,5 @@
-import {Action, Route} from "../Route";
-import {insertEvent} from "../insertEvent";
+import {Action, Route} from "../Route.js";
+import {insertEvent} from "../insertEvent.js";
 export class GithubWebhook extends Route {
     ips = [
         "192.30.252.0/22",

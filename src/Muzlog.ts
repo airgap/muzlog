@@ -1,12 +1,13 @@
-import * as dash from 'rethinkdbdash';
+import dash from 'rethinkdbdash';
 import {readFile} from "fs/promises";
 import {join} from 'path';
 import {Server} from 'https';
-import * as routes from './routes/routes';
+import * as routes from './routes/routes.js';
 import {RequestListener} from 'http';
-import {CIDR, Route} from "./Route";
+import {Route} from "./Route.js";
 import fetch from 'node-fetch';
-import {parse} from 'ipaddr.js';
+
+console.log('dash', dash);
 
 const r: any = dash({
     servers: [{

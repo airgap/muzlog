@@ -1,5 +1,5 @@
-import {Action, Route} from "../Route";
-import {insertEvent} from "../insertEvent";
+import {Action, Route} from "../Route.js";
+import {insertEvent} from "../insertEvent.js";
 export class BeatOwnHeart extends Route {
     ips = [
         "10.0.0.1"

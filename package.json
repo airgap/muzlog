@@ -1,9 +1,9 @@
 {
   "name": "muzlog",
-  "type": "module",
   "version": "0.0.0",
   "description": "Collect and publish Muzzin-related activity",
   "main": "dist/Muzlog.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p tsconfig.dev.json",

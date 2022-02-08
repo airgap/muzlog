@@ -1,8 +1,9 @@
 import {IncomingMessage} from "http";
-import {parseCIDR, IPv4, IPv6} from 'ipaddr.js';
+import * as jank from 'ipaddr.js';
+const {parseCIDR} = jank;
 
 export type Action = (params: any, {r}: { r: any, req: IncomingMessage }) => Promise<any>;
-export type CIDR = [IPv4 | IPv6, number];
+export type CIDR = [any, number];
 export abstract class Route {
     ips: string[] = [];
     ranges: CIDR[];

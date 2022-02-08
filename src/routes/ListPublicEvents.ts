@@ -1,4 +1,4 @@
-import {Action, Route} from "../Route";
+import {Action, Route} from "../Route.js";
 export class ListPublicEvents extends Route {
     ips = ['*'];
     action: Action = async (params, {r}) => {
