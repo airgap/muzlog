@@ -45,7 +45,7 @@ export class Muzlog {
         this.beatInterval = setInterval(this.heartbeat, 1000);
     }
     heartbeat = () =>
-        fetch('https://log.muzz.in/BeatOwnHeart', {
+        fetch('https://log.muzz.in/beatOwnHeart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -71,12 +71,12 @@ export class Muzlog {
                 const ip = req.headers['True-Client-IP']?.[0] ?? req.socket.remoteAddress;
                 if(!ip)
                     return;
-                if(!this.routes.has(ip)) {
+                if(!this.routes.has(path!)) {
                     res.writeHead(403);
                     res.end('Did you even try?');
                     return;
                 }
-                const {action, matches} = this.routes.get(ip)!;
+                const {action, matches} = this.routes.get(path!)!;
                 console.log('True-Client-IP', ip);
                 if (!matches(ip)) {
                     res.writeHead(403);
