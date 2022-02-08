@@ -1,13 +1,13 @@
 import {Action, Route} from "../Route";
 import {insertEvent} from "../insertEvent";
-export const GithubWebhook: Route = {
-    ips: [
-        "*"
-    ],
-    action: async (params, {r}) => {
+export class BeatOwnHeart extends Route {
+    ips = [
+        "10.0.0.1"
+    ];
+    action: Action = async (params, {r}) => {
         console.log("heartbeat", params);
         await insertEvent(
-            'vcs/github/webhook',
+            'heartbeat/muzlog',
             params,
             r
         );

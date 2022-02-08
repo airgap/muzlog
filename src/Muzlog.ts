@@ -4,9 +4,9 @@ import {join} from 'path';
 import {Server} from 'https';
 import * as routes from './routes/routes';
 import {RequestListener} from 'http';
-import {Route} from "./Route";
-const checkIp = import('ip-range-check');
+import {CIDR, Route} from "./Route";
 import fetch from 'node-fetch';
+import {parse} from 'ipaddr.js';
 
 const r: any = dash({
     servers: [{
@@ -17,6 +17,7 @@ const r: any = dash({
 });
 
 export class Muzlog {
+    routes: Map<string, Route> = new Map(Object.entries(routes).map(([path, type]: [string, {new (): Route} & typeof Route]) => [path, new type()]));
     _certs?: { [key: string]: string };
     api?: Server;
 
@@ -66,10 +67,17 @@ export class Muzlog {
                 data.push(chunk)
             );
             req.on('end', async () => {
-                const ip = req.headers['True-Client-IP'] ?? req.socket.remoteAddress;
-                const {action, ips} = (<{ [key: string]: Route }>routes)[path!!!];
-                console.log('True-Client-IP', ip)
-                if (ips[0] !== '*' && !checkIp(ip as string, ips)) {
+                const ip = req.headers['True-Client-IP']?.[0] ?? req.socket.remoteAddress;
+                if(!ip)
+                    return;
+                if(!this.routes.has(ip)) {
+                    res.writeHead(403);
+                    res.end('Did you even try?');
+                    return;
+                }
+                const {action, matches} = this.routes.get(ip)!;
+                console.log('True-Client-IP', ip);
+                if (!matches(ip)) {
                     res.writeHead(403);
                     res.end('DENIED!!!');
                     return;

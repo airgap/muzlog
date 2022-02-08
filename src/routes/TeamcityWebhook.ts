@@ -1,8 +1,8 @@
 import {Action, Route} from "../Route";
 import {insertEvent} from "../insertEvent";
-export const TeamcityWebhook: Route = {
-    ips: ['*'],
-    action: async (params, {r}) => {
+export class TeamcityWebhook extends Route {
+    ips = ['*'];
+    action: Action = async (params, {r}) => {
         console.log("teamcityWebhook", params);
         if(params.secret !== process.env.TEAMCITY_WEBHOOK_SECRET)
             return {status: 403, body: "YAH YEET"};
