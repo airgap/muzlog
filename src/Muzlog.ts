@@ -7,8 +7,6 @@ import {RequestListener} from 'http';
 import {Route} from "./Route.js";
 import fetch from 'node-fetch';
 
-console.log('dash', dash);
-
 const r: any = dash({
     servers: [{
         host: 'localhost',
