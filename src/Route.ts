@@ -19,6 +19,8 @@ export abstract class Route {
         const addr = parse(ip);
         console.log('incoming ip', ip, 'addr', addr);
         // @ts-ignore
-        return this.ranges.some(range => addr.match(range));
+        const ok = this.ranges.some(range => addr.match(range));
+        console.log('ok', ok);
+        return ok;
     }
 }
