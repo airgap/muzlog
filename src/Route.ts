@@ -6,12 +6,12 @@ const {parseCIDR, parse} = jank;
 export type Action = (params: any, {r}: { r: any, req: IncomingMessage }) => Promise<any>;
 export type CIDR = [any, number];
 export abstract class Route {
-    ips: string[] = [];
-    ranges: CIDR[];
+    abstract ips: string[];
+    ranges?: CIDR[];
     abstract action: Action;
-
-    constructor() {
+    init = () => {
         this.ranges = this.ips.map(ip => parseCIDR(ip));
+        console.log('made ips', this.ips, 'into ranges', this.ranges);
     }
     matches = (ip: string): boolean => {
         if(this.ips[0] === '*')

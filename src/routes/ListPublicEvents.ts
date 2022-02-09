@@ -1,6 +1,6 @@
 import {Action, Route} from "../Route.js";
 export class ListPublicEvents extends Route {
-    ips = ['*'];
+    ips = ['0.0.0.0/0'];
     action: Action = async (params, {r}) => {
         console.log("listing public events", params);
         return await r.table('Events')

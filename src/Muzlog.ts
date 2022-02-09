@@ -16,7 +16,11 @@ const r: any = dash({
 });
 
 export class Muzlog {
-    routes: Map<string, Route> = new Map(Object.entries(routes).map(([path, type]: [string, {new (): Route} & typeof Route]) => [path, new type()]));
+    routes: Map<string, Route> = new Map(Object.entries(routes).map(([path, type]: [string, {new (): Route} & typeof Route]) => {
+        const route = new type();
+        route.init();
+        return [path, route];
+    }));
     _certs?: { [key: string]: string };
     api?: Server;
 

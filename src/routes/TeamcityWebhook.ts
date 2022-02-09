@@ -1,7 +1,7 @@
 import {Action, Route} from "../Route.js";
 import {insertEvent} from "../insertEvent.js";
 export class TeamcityWebhook extends Route {
-    ips = ['*'];
+    ips = ['0.0.0.0/0'];
     action: Action = async (params, {r}) => {
         console.log("teamcityWebhook", params);
         if(params.secret !== process.env.TEAMCITY_WEBHOOK_SECRET)
