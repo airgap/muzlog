@@ -16,7 +16,7 @@ const r: any = dash({
 });
 
 export class Muzlog {
-    routes: Map<string, Route> = new Map(Object.entries(routes).map(([path, type]: [string, {new (): Route} & typeof Route]) => {
+    routes: Map<string, Route> = new Map(Object.entries(routes).map(([path, type]: [string, { new(): Route } & typeof Route]) => {
         const route = new type();
         route.init();
         return [path, route];
@@ -43,7 +43,7 @@ export class Muzlog {
     }
 
     startHeatbeat = () => {
-        if(this.beatInterval)
+        if (this.beatInterval)
             clearInterval(this.beatInterval);
         console.log('Starting heartbeat');
         this.beatInterval = setInterval(this.heartbeat, this.heartrate);
@@ -81,9 +81,9 @@ export class Muzlog {
             );
             req.on('end', async () => {
                 const ip = req.headers['True-Client-IP']?.[0] ?? req.socket.remoteAddress;
-                if(!ip)
+                if (!ip)
                     return;
-                if(!this.routes.has(path!)) {
+                if (!this.routes.has(path!)) {
                     res.writeHead(403);
                     res.end('Did you even try?');
                     return;
