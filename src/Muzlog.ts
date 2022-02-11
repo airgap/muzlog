@@ -25,6 +25,7 @@ export class Muzlog {
     api?: Server;
 
     beatInterval?: NodeJS.Timer;
+    heartrate = 10000;
 
     constructor() {
     }
@@ -45,16 +46,22 @@ export class Muzlog {
         if(this.beatInterval)
             clearInterval(this.beatInterval);
         console.log('Starting heartbeat');
-        this.beatInterval = setInterval(this.heartbeat, 1000);
+        this.beatInterval = setInterval(this.heartbeat, this.heartrate);
     }
     heartbeat = async () => {
         console.log('Trying to beat own heart');
+        const now = +new Date();
         await fetch('https://log.muzz.in/beatOwnHeart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: '{"Doggo": "Woof"}'
+            body: JSON.stringify({
+                type: 'heartbeat',
+                time: now,
+                next: now + this.heartrate,
+                rate: this.heartrate
+            })
         })
     }
 
