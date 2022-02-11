@@ -1,6 +1,6 @@
 import {Action, Route} from "../Route.js";
 import {insertEvent} from "../insertEvent.js";
-import {IpRanges} from "../IpRanges";
+import {IpRanges} from "../IpRanges.js";
 export class TeamcityWebhook extends Route {
     ips = IpRanges.all;
     action: Action = async (params, {r}) => {
