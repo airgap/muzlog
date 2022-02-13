@@ -36,7 +36,7 @@ export class Muzlog {
 
     startHttpApi = async () => {
         const names = ['cert', 'key', 'ca'];
-        const paths = names.map(name => process.env[name]);
+        const paths = names.map(name => process.env[name.toUpperCase()+'_PATH']);
         if (paths.some(p => p)) {
             if (!paths.every(p => p))
                 throw new Error('Some but not all cert paths set');
