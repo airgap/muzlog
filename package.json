@@ -26,7 +26,8 @@
     "ip-range-check": "^0.2.0",
     "node-fetch": "^3.2.0",
     "pm2": "^2.3.0",
-    "rethinkdbdash": "^2.3.31"
+    "rethinkdbdash": "^2.3.31",
+    "ws": "^8.5.0"
   },
   "devDependencies": {
     "@types/ws": "^8.2.2",
@@ -35,7 +36,7 @@
     "webpack-cli": "^4.9.2"
   },
   "engines": {
-  "node": ">=16"
+    "node": ">=16"
   },
   "engineStrict": true
 }
