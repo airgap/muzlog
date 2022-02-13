@@ -131,7 +131,7 @@ export class Muzlog {
                     } catch (e) {
                         console.log('error', e);
                     }
-                const result = await action(params, {r, req});
+                const result = await action(params, {r, req, sendEvent: this.sendEvent});
                 console.log('result', result);
                 res.end(JSON.stringify(result));
             })

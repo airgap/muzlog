@@ -3,7 +3,7 @@ import {IncomingMessage} from "http";
 import jank from 'ipaddr.js';
 const {parseCIDR, parse} = jank;
 
-export type Action = (params: any, {r}: { r: any, req: IncomingMessage }) => Promise<any>;
+export type Action = (params: any, {r, req, sendEvent}: { r: any, req: IncomingMessage, sendEvent: Function }) => Promise<any>;
 export type CIDR = [any, number];
 export abstract class Route {
     abstract ips: string[];
