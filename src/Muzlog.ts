@@ -8,8 +8,8 @@ import {Route} from "./Route.js";
 import fetch from 'node-fetch';
 import WebSocket, {WebSocketServer} from 'ws';
 import {parse} from 'url';
-import {Filter} from "./Filter";
-import {Listener} from "./Listener";
+import {Filter} from "./Filter.js";
+import {Listener} from "./Listener.js";
 
 const r: any = dash({
     servers: [{
