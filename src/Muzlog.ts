@@ -18,7 +18,7 @@ const r: any = dash({
     }],
     db: 'Muzlog'
 });
-
+console.log(process.env);
 export class Muzlog {
     routes: Map<string, Route> = new Map(Object.entries(routes).map(([path, type]: [string, { new(): Route } & typeof Route]) => {
         const route = new type();
