@@ -42,8 +42,10 @@ export class Muzlog {
                 throw new Error('Some but not all cert paths set');
             const [cert, key, ca] = await Promise.all(paths.map(path => readFile(path!, 'utf8')));
             this.api = new HttpsServer({cert, key, ca}, this.httpListener).listen(443);
+            console.log('Started HTTPS server (safe for prod)');
         } else {
             this.api = new HttpServer(this.httpListener).listen(80);
+            console.log('Started HTTP server (not safe for prod)');
         }
         this.startHeartbeat();
     }
