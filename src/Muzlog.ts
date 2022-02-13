@@ -8,6 +8,8 @@ import {Route} from "./Route.js";
 import fetch from 'node-fetch';
 import WebSocket, {WebSocketServer} from 'ws';
 import {parse} from 'url';
+import {Filter} from "./Filter";
+import {Listener} from "./Listener";
 
 const r: any = dash({
     servers: [{
@@ -55,18 +57,21 @@ export class Muzlog {
     heartbeat = async () => {
         // console.log('Trying to beat own heart');
         const now = +new Date();
-        await fetch('https://log.muzz.in/beatOwnHeart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                type: 'heartbeat',
-                time: now,
-                next: now + this.heartrate,
-                rate: this.heartrate
-            })
-        })
+        this.sendEvent({
+            type: 'heartbeat',
+            source: 'muzlog',
+            time: now,
+            next: now + this.heartrate,
+            rate: this.heartrate
+        });
+    }
+
+    listeners: Listener[] = [];
+
+    sendEvent = async (event: any) => {
+        this.listeners
+            .filter(({socket, filter}: Listener) => socket && filter?.evaluatePacket(event))
+            .forEach(({socket}: Listener) => socket.emit(event.type, event));
     }
 
     httpListener: RequestListener = (req, res) => {
@@ -164,6 +169,14 @@ export class Muzlog {
             this.sockets.add(ws);
             ws.on('message', (data: string) => {
                 console.info('received: %s', data);
+                const event = JSON.parse(data);
+                if(event?.type === 'filter') {
+                    const listener = this.listeners.find(({socket}) => socket === ws);
+                    if(listener)
+                        listener.filter = new Filter(event.filter);
+                    return;
+                }
+                this.sendEvent(event);
             });
         });
         console.info('WebSocket server started');
