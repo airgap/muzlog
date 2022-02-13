@@ -1,4 +1,4 @@
-import {Operator, Operators} from './Operators';
+import {Operator, Operators} from './Operators.js';
 export class Filter {
     condition: any;
     valid: boolean;

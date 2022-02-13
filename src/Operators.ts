@@ -1,4 +1,4 @@
-import { Filter } from './Filter';
+import { Filter } from './Filter.js';
 export type Operator = (packet: object, parameters: unknown[]) => any;
 const
     er = Filter.evaluateReduce,
