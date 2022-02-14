@@ -1,6 +1,4 @@
-import {Muzlog} from "./Muzlog";
+import {Muzlog} from "./Muzlog.js";
 
 const muzlog = new Muzlog();
 muzlog.init();
-
-

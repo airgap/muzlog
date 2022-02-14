@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2021",
+    "module": "es2022",
+    "target": "esnext",
     "sourceMap": true,
     "strict": true,
     "rootDir": "./src",
     "outDir": "dist",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true
   },
   "exclude": [
     "./node_modules"
